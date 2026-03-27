@@ -1,15 +1,7 @@
 import { Type } from 'class-transformer';
-import {
-  IsOptional,
-  IsString,
-  IsNotEmpty,
-  IsObject,
-  ValidateNested,
-  IsArray,
-  IsEnum,
-  IsDate,
-} from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty, IsObject, ValidateNested, IsArray, IsEnum, IsDate } from 'class-validator';
 import { AppSettings } from '@prisma/client';
+import { UpdateSettingCategory } from '../enums/update-setting.enum';
 
 export class AppSettingsDto {
   @IsEnum(AppSettings)
@@ -33,9 +25,9 @@ export class AppSettingsUpdateManyDto {
   @IsNotEmpty({ message: 'El campo appSettingsDto es requerido' })
   appSettingsDto: AppSettingsDto[];
 
-  @IsEnum(AppSettings)
-  @IsNotEmpty({ message: 'El campo key es requerido' })
-  key: AppSettings;
+  @IsEnum(UpdateSettingCategory)
+  @IsNotEmpty({ message: 'El campo updateSettingCategory es requerido' })
+  updateSettingCategory: UpdateSettingCategory;
 }
 
 export class AppSettingsPayload {
