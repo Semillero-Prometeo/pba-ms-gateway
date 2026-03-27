@@ -1,6 +1,6 @@
 import { IsString, IsOptional, IsNotEmpty, IsEmail, IsUUID, MaxLength, IsEnum } from 'class-validator';
 
-export class CommonPersonDto {
+export class CreatePersonDto {
   @IsUUID('4', { message: 'El tipo de documento no es válido' })
   @IsNotEmpty({ message: 'El tipo de documento es requerido' })
   document_type_id: string;
@@ -23,20 +23,8 @@ export class CommonPersonDto {
   @IsString()
   @IsOptional({ message: 'El teléfono es requerido' })
   @MaxLength(15)
-  phone: string;
-}
+  phone?: string;
 
-export class CommonCreateCompletePersonDto extends CommonPersonDto {
-  // @IsUUID('4')
-  @IsNotEmpty({ message: 'El país es requerido' })
-  country_id: string;
-
-  @IsString()
-  @IsOptional()
-  image_url?: string;
-}
-
-export class CreatePersonDto extends CommonCreateCompletePersonDto {
   @IsEmail({}, { message: 'El correo electrónico no es válido' })
   @IsNotEmpty({ message: 'El correo electrónico es requerido' })
   @MaxLength(40, { message: 'El correo electrónico no puede tener más de 40 caracteres' })
