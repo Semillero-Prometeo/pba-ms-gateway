@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { DocumentTypesModule } from './document-types/document-types.module';
-import { DepartmentsModule } from './departments/departments.module';
 import { AuthMsController } from './auth-ms.controller';
 import { NatsModule } from 'src/transports/nats.module';
 import { AuthModule } from './auth/auth.module';
@@ -15,7 +14,6 @@ import { AppSettingsModule } from './app-settings/app-settings.module';
     PersonModule,
     AuthModule,
     DocumentTypesModule,
-    DepartmentsModule,
     UsersModule,
     RolesModule,
     AppSettingsModule,
