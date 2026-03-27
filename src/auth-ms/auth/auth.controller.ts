@@ -32,7 +32,7 @@ export class AuthController {
   constructor(@Inject(NATS_SERVICE) private readonly client: ClientProxy) {}
 
   @Public()
-  @Post('login/credentials')
+  @Post('login')
   @UseGuards(LocalAuthGuard)
   login(
     @Request()
