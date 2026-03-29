@@ -14,7 +14,5 @@ RUN npm ci --prefer-offline
 # 3. Código fuente — la capa que cambia con más frecuencia
 COPY --chown=node:node . .
 
-USER node
-
 # Exponer el puerto de debugging
 EXPOSE 9229
