@@ -15,4 +15,4 @@ RUN npm ci --prefer-offline
 COPY --chown=node:node . .
 
 # Exponer el puerto de debugging
-EXPOSE 9229
+EXPOSE 9230
