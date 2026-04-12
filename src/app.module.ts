@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ManagementMsModule } from './management-ms/management.module';
 import { RoboticsMsModule } from './robotics-ms/robotics-ms.module';
+import { MaiCoreMsModule } from './mai-core-ms/mai-core-ms.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RoboticsMsModule } from './robotics-ms/robotics-ms.module';
     AuthMsModule,
     ManagementMsModule,
     RoboticsMsModule,
+    MaiCoreMsModule
   ],
   controllers: [AppController],
   providers: [],
