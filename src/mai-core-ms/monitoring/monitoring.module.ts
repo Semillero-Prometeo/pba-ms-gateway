@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
-import { CameraController } from "./camera.controller";
+import { MonitoringController } from "./monitoring.controller";
 import { NatsModule } from "src/transports/nats.module";
 import { AuthModule } from "src/auth/auth.module";
 
 @Module({
   imports: [NatsModule, AuthModule],
-  controllers: [CameraController],
+  controllers: [MonitoringController],
 })
-export class CameraModule {}
+export class MonitoringModule {}
