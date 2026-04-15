@@ -7,6 +7,7 @@ import {
   SaveSequenceDto,
   ScanPcasDto,
   SequenceByNameDto,
+  StartChainDto,
   StartPlaybackDto,
 } from './dto/sequence.dto';
 
@@ -81,6 +82,33 @@ export class SequenceController {
   @Post('stop')
   async stopPlayback() {
     return this.client.send(`${ROBOTICS_MS}.sequenceService.stopPlayback`, {}).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+  }
+
+  @Post('chain/start')
+  async startChain(@Body() body: StartChainDto) {
+    return this.client.send(`${ROBOTICS_MS}.sequenceService.startChain`, body).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+  }
+
+  @Post('chain/stop')
+  async stopChain() {
+    return this.client.send(`${ROBOTICS_MS}.sequenceService.stopChain`, {}).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+  }
+
+  @Get('chain/status')
+  async chainStatus() {
+    return this.client.send(`${ROBOTICS_MS}.sequenceService.chainStatus`, {}).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),

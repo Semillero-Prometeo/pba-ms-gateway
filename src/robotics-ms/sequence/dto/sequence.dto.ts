@@ -96,3 +96,30 @@ export class StartPlaybackDto {
   @Type(() => MotionBlockDto)
   blocks: MotionBlockDto[];
 }
+
+export class SequenceChainItemDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  @IsOptional()
+  repeat?: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @Max(30000)
+  @IsOptional()
+  delay_ms?: number;
+}
+
+export class StartChainDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SequenceChainItemDto)
+  items: SequenceChainItemDto[];
+}
