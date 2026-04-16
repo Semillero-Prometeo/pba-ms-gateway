@@ -14,7 +14,7 @@ export class AudioController {
 
   @Get('microphones')
   async getMicrophones() {
-    return this.client.send(`${MAI_CORE_MS}.audioService.getMicrophones`, {}).pipe(
+    return this.client.send(`${MAI_CORE_MS}.microphoneService.listMicrophones`, {}).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),
@@ -23,7 +23,7 @@ export class AudioController {
 
   @Post('select-microphone')
   async selectMicrophone(@Body() body: SelectMicrophoneDto) {
-    return this.client.send(`${MAI_CORE_MS}.audioService.selectMicrophone`, body).pipe(
+    return this.client.send(`${MAI_CORE_MS}.microphoneService.selectMicrophone`, body).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),
@@ -32,7 +32,7 @@ export class AudioController {
 
   @Post('start-listening')
   async startListening() {
-    return this.client.send(`${MAI_CORE_MS}.audioService.startListening`, {}).pipe(
+    return this.client.send(`${MAI_CORE_MS}.microphoneService.startListening`, {}).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),
@@ -41,7 +41,7 @@ export class AudioController {
 
   @Post('stop-listening')
   async stopListening() {
-    return this.client.send(`${MAI_CORE_MS}.audioService.stopListening`, {}).pipe(
+    return this.client.send(`${MAI_CORE_MS}.microphoneService.stopListening`, {}).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),
@@ -50,7 +50,7 @@ export class AudioController {
 
   @Get('listening-status')
   async getListeningStatus() {
-    return this.client.send(`${MAI_CORE_MS}.audioService.getListeningStatus`, {}).pipe(
+    return this.client.send(`${MAI_CORE_MS}.microphoneService.getListeningStatus`, {}).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),
