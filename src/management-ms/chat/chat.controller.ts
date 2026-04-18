@@ -18,4 +18,13 @@ export class ChatController {
       }),
     );
   }
+
+  @Post("poema")
+  async declarePoema() {
+    return this.client.send(`${MANAGEMENT_MS}.chatService.declarePoema`, {}).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+  }
 }
