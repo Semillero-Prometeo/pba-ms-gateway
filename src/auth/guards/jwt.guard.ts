@@ -45,9 +45,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const baseCanActivate = await super.canActivate(context);
     if (!baseCanActivate) return false;
 
-    // const token = this.extractTokenFromHeader(request);
+    const token = this.extractTokenFromHeader(request);
 
-    // await this.validateSession(request.user.id, token);
+    await this.validateSession(request.user.id, token);
 
     const user: UserResponse = await this.usersService.findOneUser(request.user.id);
 
