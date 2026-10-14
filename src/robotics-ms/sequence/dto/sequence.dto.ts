@@ -2,6 +2,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
+  IsIn,
   IsInt,
   IsNotEmpty,
   IsNumber,
@@ -11,7 +12,11 @@ import {
   MaxLength,
   Min,
   MinLength,
+  Validate,
   ValidateNested,
+  ValidationArguments,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -79,9 +84,17 @@ export class MotionSequenceDto {
   @Min(0)
   arduino_id?: number;
 
+  @IsString()
+  @IsIn(['cara', 'cuello', 'brazo_derecho', 'brazo_izquierdo', 'torso', 'cadera'])
+  category: string;
+
   @IsArray()
   @ArrayMinSize(1)
   blocks: unknown[];
+
+  @IsArray()
+  @ArrayMinSize(1)
+  blocks_neutro: unknown[];
 }
 
 export class SaveSequenceDto {
@@ -106,11 +119,38 @@ export class ScanPcasDto {
   arduino_id: number;
 }
 
+@ValidatorConstraint({ name: 'nameOrBlocks', async: false })
+class NameOrBlocksConstraint implements ValidatorConstraintInterface {
+  validate(_: unknown, args: ValidationArguments) {
+    const obj = args.object as StartPlaybackDto;
+    return Boolean(obj.name) || (Array.isArray(obj.blocks) && obj.blocks.length > 0);
+  }
+
+  defaultMessage() {
+    return 'Indique name o blocks';
+  }
+}
+
 export class StartPlaybackDto {
+  @Validate(NameOrBlocksConstraint)
+  @IsOptional()
+  @IsIn(['normal', 'neutro'])
+  mode?: 'normal' | 'neutro';
+
+  @IsOptional()
+  @IsIn(['panel', 'estudio'])
+  source?: 'panel' | 'estudio';
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  name?: string;
+
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => MotionBlockDto)
-  blocks: MotionBlockDto[];
+  blocks?: MotionBlockDto[];
 }
 
 export class SequenceChainItemDto {

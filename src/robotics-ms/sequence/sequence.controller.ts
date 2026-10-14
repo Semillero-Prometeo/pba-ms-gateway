@@ -114,4 +114,13 @@ export class SequenceController {
       }),
     );
   }
+
+  @Get('runtime')
+  async getRuntime() {
+    return this.client.send(`${ROBOTICS_MS}.sequenceService.getRuntime`, {}).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+  }
 }
