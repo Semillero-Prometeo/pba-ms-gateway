@@ -1,4 +1,5 @@
 import {
+  ArrayMinSize,
   IsArray,
   IsBoolean,
   IsInt,
@@ -53,19 +54,34 @@ export class MotionBlockDto {
 }
 
 export class MotionSequenceDto {
+  @IsOptional()
   @IsInt()
   @Min(1)
-  version: number;
+  version?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  id?: number;
 
   @IsString()
   @MinLength(1)
   @MaxLength(80)
   name: string;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(280)
+  description?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  arduino_id?: number;
+
   @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => MotionBlockDto)
-  blocks: MotionBlockDto[];
+  @ArrayMinSize(1)
+  blocks: unknown[];
 }
 
 export class SaveSequenceDto {
