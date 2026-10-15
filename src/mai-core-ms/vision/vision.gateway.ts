@@ -55,7 +55,7 @@ export class VisionGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     const state: ClientVisionState = {
       selectedCameraId: null,
-      thumbMaxWidth: 160,
+      thumbMaxWidth: 480,
       previewMaxWidth: 640,
     };
     this.states.set(client, state);
@@ -102,7 +102,7 @@ export class VisionGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
     if (msg.type === 'setQuality') {
-      state.thumbMaxWidth = Math.min(640, Math.max(32, Math.floor(msg.thumbMaxWidth)));
+      state.thumbMaxWidth = Math.min(960, Math.max(32, Math.floor(msg.thumbMaxWidth)));
       state.previewMaxWidth = Math.min(1920, Math.max(160, Math.floor(msg.previewMaxWidth)));
     }
   }
