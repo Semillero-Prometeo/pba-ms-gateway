@@ -18,6 +18,32 @@ import {
 import { RequestUserDto } from 'src/core/dto/request-user.dto';
 import { Roles } from '@prisma/client';
 
+export class PersonInputDto {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  first_name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  last_name: string;
+
+  @IsUUID('4')
+  @IsNotEmpty()
+  document_type_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(11)
+  document_number: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(15)
+  phone?: string;
+}
+
 export class CreateUserDto {
   @IsUUID('4')
   @IsOptional()
@@ -43,9 +69,10 @@ export class CreateUserDto {
   @IsUUID('4', { each: true })
   role_ids: string[];
 
-  @IsBoolean()
-  @IsOptional()
-  assign_student_role?: boolean;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PersonInputDto)
+  person: PersonInputDto;
 }
 
 export class CreatePayload {
