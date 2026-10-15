@@ -45,13 +45,10 @@ export class RolesGuard implements CanActivate {
       throw new ForbiddenException('Acceso no autorizado, sin roles asignados');
     }
 
-    const userRoleNames = user.user_role
-      .map((userRole: UserRoleResponse) => userRole.role?.name)
-      .filter((name) => !!name);
-
-    const hasRequiredRole = requiredRoles.some((role: Roles) => userRoleNames.includes(role));
-
-    if (!hasRequiredRole) {
+    const raw = request.headers['x-active-role'];
+    const activeRoleId = Array.isArray(raw) ? raw[0] : raw;
+    const active = user.user_role.find((ur: UserRoleResponse) => ur.role && ur.role.id === activeRoleId);
+    if (!active || !active.role.name || !requiredRoles.includes(active.role.name as Roles)) {
       throw new ForbiddenException('No tiene permisos para acceder a este recurso');
     }
 

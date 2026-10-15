@@ -8,11 +8,13 @@ import { ExtendedRequest } from 'src/core/interfaces/auth';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateAuthUserDto } from './dto/update-user.dto';
 import { InactiveUserDto } from './dto/delete-user.dto';
-import { JwtAuthGuard } from 'src/auth/guards';
-import { Public } from 'src/core/decorators/public-routes.decorator';
+import { JwtAuthGuard, RolesGuard } from 'src/auth/guards';
+import { HasRoles } from 'src/core/decorators/roles.decorator';
+import { Roles } from '@prisma/client';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@HasRoles(Roles.ADMIN)
 export class UsersController {
   constructor(@Inject(NATS_SERVICE) private readonly client: ClientProxy) {}
 
@@ -35,7 +37,6 @@ export class UsersController {
   }
 
   @Post()
-  @Public()
   create(@Body() createUserDto: CreateUserDto) {
     return this.client
       .send(`${AUTH_MS}.usersService.create`, {
